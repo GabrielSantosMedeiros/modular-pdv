@@ -6,4 +6,6 @@
 
 db.sqlite3
 
+resources/
+
 __pycache__/

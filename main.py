@@ -1,6 +1,6 @@
 from database.core import DatabaseProvider
 from database.models import Produto, Carrinho, ItemCarrinho, Pagamento
-
+from database.services import ProdutoService
 
 data_provider = DatabaseProvider()
 

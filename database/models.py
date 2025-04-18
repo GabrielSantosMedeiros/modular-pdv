@@ -11,7 +11,8 @@ provider = DatabaseProvider()
 @JsonSerializer
 class Produto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    descricao = models.TextField()
+    nome = models.CharField(max_length=128)
+    descricao = models.TextField(null=True)
     imagem = models.TextField()
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField(default=True)
