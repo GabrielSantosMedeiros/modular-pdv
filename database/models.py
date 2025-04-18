@@ -2,11 +2,13 @@ import peewee as models
 import uuid
 from datetime import datetime
 from database.core import DatabaseProvider
+from configuration.wrappers import JsonSerializer
 
 
 provider = DatabaseProvider()
 
 
+@JsonSerializer
 class Produto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     descricao = models.TextField()
@@ -22,6 +24,7 @@ class Produto(models.Model):
 
 
 
+@JsonSerializer
 class Carrinho(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     cliente = models.CharField(max_length=255, null=True)
@@ -30,6 +33,7 @@ class Carrinho(models.Model):
     status_entrega = models.CharField(default='PENDENTE')
     status_pagamento = models.CharField(default='PENDENTE')
     total = models.DecimalField(max_digits=10, decimal_places=2)
+    data_pedido = models.DateField()
     created_at = models.DateTimeField(default=datetime.now)
     updated_at = models.DateTimeField(default=datetime.now)
 
@@ -37,8 +41,9 @@ class Carrinho(models.Model):
         database = provider.getDatabase()
         table_name = 'carrinho'
 
-    
 
+
+@JsonSerializer
 class ItemCarrinho(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     carrinho = models.ForeignKeyField(model=Carrinho, backref='itens')
@@ -53,12 +58,14 @@ class ItemCarrinho(models.Model):
 
 
 
+@JsonSerializer
 class Pagamento(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     carrinho = models.ForeignKeyField(model=Carrinho, backref='pagamentos')
     tipo_pagamento = models.CharField(max_length=20)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     imagem_comprovante = models.TextField(null=True)
+    data_pagamento = models.DateField()
     created_at = models.DateTimeField(default=datetime.now)
     updated_at = models.DateTimeField(default=datetime.now)
 

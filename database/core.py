@@ -1,7 +1,7 @@
 from peewee import SqliteDatabase
-from configuration.wrappers import singleton
+from configuration.wrappers import Singleton
 
-@singleton
+@Singleton
 class DatabaseProvider:
     _database = SqliteDatabase('db.sqlite3')
 
