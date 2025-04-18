@@ -1,9 +1,10 @@
 from peewee import SqliteDatabase
 from configuration.wrappers import Singleton
+from configuration.settings import BASE_DIR
 
 @Singleton
 class DatabaseProvider:
-    _database = SqliteDatabase('db.sqlite3')
+    _database = SqliteDatabase(BASE_DIR / 'db.sqlite3')
 
     def getDatabase(self):
         return self._database
